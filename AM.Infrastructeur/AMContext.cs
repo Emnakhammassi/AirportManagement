@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AM.Applactioncore.Domaine;
+using AM.Infrastructeur.configurations;
+using AM.Infrastructeur.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace AM.Infrastructeur
@@ -25,11 +27,21 @@ namespace AM.Infrastructeur
                                       MultipleActiveResultSets=True");
             base.OnConfiguring(optionsBuilder);
         }
-    }
-
-
-
-
-
     
-}
+
+    //onModel
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //1err methode
+            modelBuilder.ApplyConfiguration(new PlaneConfiguration());
+
+            //2eme methode
+            modelBuilder.Entity<Plane>().HasKey(p => p.PlaneId);
+            modelBuilder.Entity<Plane>().ToTable("MyPlanes");
+            modelBuilder.Entity<Plane>().Property(P => P.Capacity).HasColumnName("PlaneCapacity");
+
+
+            modelBuilder.ApplyConfiguration(new FlightConfiguration());
+        }
+
+    } }
