@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Net;
@@ -12,6 +13,8 @@ namespace AM.Applactioncore.Domaine
     {
         public DateTime EmployementDate { get; set; }
         public string function { get; set; }
+
+        [DataType(DataType.Currency)]
         public int Salary { get; set; }
     
 
