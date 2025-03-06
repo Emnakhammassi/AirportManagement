@@ -20,14 +20,14 @@ Plane plane2 = new Plane { Capacity = 200 };
 
 Console.WriteLine();
 Console.WriteLine("******************Testing*************");
-Passenger p1 = new Passenger { FirstName = "steve", Lastname = "jobs", EmailAddress = "amouna" };
+Passenger p1 = new Passenger { FullName = new FullName { FirstName = "steve", Lastname = "jobs" }, EmailAddress = "amouna" };
 Console.WriteLine("la meth checkpassenger");
 Console.WriteLine(p1.CheckProfile1("x","jobs"));
 Console.WriteLine(p1.CheckProfile2("steave","jobs","steeve.jobs@gmail.com"));
 
 
-Staff s1 = new Staff { FirstName = "Mark", Lastname = "Zuckerberg", EmailAddress = "Mark.Zuckerberg@gmail.com", function = "steward" };
-Traveller t1 = new Traveller { FirstName = "emna", Lastname = "khammassi", EmailAddress = "emna.khammassi@gmail.com", HealthInfo = "rien a signaler" };
+Staff s1 = new Staff {FullName = new FullName { FirstName = "Mark", Lastname = "Zuckerberg" }, EmailAddress = "Mark.Zuckerberg@gmail.com", function = "steward" };
+Traveller t1 = new Traveller {FullName =new FullName { FirstName = "emna", Lastname = "khammassi" }, EmailAddress = "emna.khammassi@gmail.com", HealthInfo = "rien a signaler" };
 p1.PassengerType();
 s1.PassengerType();
 t1.PassengerType();
@@ -66,7 +66,7 @@ foreach (var flight in fm.OrderedDurationFlights())
 Console.WriteLine("Les 3 voyageurs les plus âgés du vol :");
 foreach (var traveller in fm.SeniorTravellers(fm.Flights.First()))
 {
-    Console.WriteLine($"Nom: {traveller.FirstName} {traveller.Lastname}, Date de naissance: {traveller.BrithDate}");
+    Console.WriteLine($"Nom: {traveller.FullName.FirstName} {traveller.FullName.Lastname}, Date de naissance: {traveller.BrithDate}");
 }
 //queston15
 
@@ -79,18 +79,21 @@ fm.DestinationGroupedFlights();
 // Création d'un passager
 Passenger passenger = new Passenger
 {
-    FirstName = "emna",
-    Lastname = "khammassi"
+    FullName = new FullName
+    {
+        FirstName = "emna",
+        Lastname = "khammassi"
+    }
 };
 
 // Affichage du nom avant la modification
-Console.WriteLine($"Avant modification : {passenger.FirstName} {passenger.Lastname}");
+Console.WriteLine($"Avant modification : {passenger.FullName.FirstName} {passenger.FullName.Lastname}");
 
 // Appel de la méthode d'extension
 passenger.UpperFullName();
 
 // Affichage du nom après la modification
-Console.WriteLine($"Après modification : {passenger.FirstName} {passenger.Lastname}");
+Console.WriteLine($"Après modification : {passenger.FullName.FirstName} {passenger.FullName.Lastname}");
 
 
 

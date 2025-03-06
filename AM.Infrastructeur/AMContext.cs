@@ -42,6 +42,19 @@ namespace AM.Infrastructeur
 
 
             modelBuilder.ApplyConfiguration(new FlightConfiguration());
+            //configure owend 
+
+            modelBuilder.Entity<Passenger>().OwnsOne(p => p.FullName);
+
+
         }
+
+        protected override void ConfigureConventions( ModelConfigurationBuilder ConfigurationBuilder)
+        {
+            ConfigurationBuilder.Properties<DateTime>().HaveColumnType("datetime");
+            base.ConfigureConventions(ConfigurationBuilder);
+
+        }
+
 
     } }

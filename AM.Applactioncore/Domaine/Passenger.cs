@@ -14,9 +14,7 @@ namespace AM.Applactioncore.Domaine
         [StringLength(7)]
         public int PassportNumber { get; set; }
 
-        [MinLength(3,ErrorMessage = "FirstName must be at least 3 characters long.")]
-        [MaxLength(25, ErrorMessage = "FirstName cannot exceed 25 characters.")]
-        public string FirstName { get; set; }
+       
 
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
@@ -27,7 +25,7 @@ namespace AM.Applactioncore.Domaine
 
         [RegularExpression("^[0,9]{8}$")]
         public int TelNumber { get; set; }
-        public string Lastname { get; set; }
+        
        
         public ICollection<Flight> flights { get; set; }
 
@@ -36,24 +34,25 @@ namespace AM.Applactioncore.Domaine
             return "Date" + BrithDate;
         }
 
+        public FullName FullName { get; set; }
 
-    //question10-a
-    public bool CheckProfile1(string firstName, string lastName)
+        //question10-a
+        public bool CheckProfile1(string firstName, string lastName)
         {
-            return FirstName == firstName && Lastname == lastName;
+            return FullName.FirstName == firstName && FullName.Lastname == lastName;
         }
         //question10-b
         public bool CheckProfile2(string firstName, string lastName, string email) {
-            return FirstName == firstName && Lastname == lastName && EmailAddress == email;
+            return FullName.FirstName == firstName && FullName.Lastname == lastName && EmailAddress == email;
         }
         //question10-c
 
          public bool CheckProfile3(string firstName, string lastName, string email = null)
 
          {   if(email != null) 
-             return FirstName == firstName && Lastname == lastName && EmailAddress == email;
+             return FullName.FirstName == firstName && FullName.Lastname == lastName && EmailAddress == email;
          else
-                 return FirstName == firstName && Lastname == lastName;
+                 return FullName.FirstName == firstName && FullName.Lastname == lastName;
 
          }
 
