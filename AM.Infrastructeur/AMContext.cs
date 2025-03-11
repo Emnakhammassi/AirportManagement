@@ -46,6 +46,8 @@ namespace AM.Infrastructeur
 
             modelBuilder.Entity<Passenger>().OwnsOne(p => p.FullName);
 
+            modelBuilder.ApplyConfiguration(new PassengerConfiguration());
+
 
         }
 
