@@ -17,7 +17,7 @@ namespace AM.Applactioncore.Intterfaces
         //question13
         IEnumerable<Flight> OrderedDurationFlights();
         //question14
-        IEnumerable<Traveller> SeniorTravellers(Flight flight);
+        //IEnumerable<Traveller> SeniorTravellers(Flight flight);
         //queston15
         public IEnumerable<IGrouping<string, Flight>> DestinationGroupedFlights();
 

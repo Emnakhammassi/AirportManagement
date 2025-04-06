@@ -3,6 +3,7 @@ using System.Runtime.Intrinsics.X86;
 using AM.Applactioncore.Domaine;
 using AM.Applactioncore.Services;
 using AM.ApplicationCore.Domain;
+using AM.Infrastructeur;
 //question7
 Plane plane = new Plane();
 
@@ -64,10 +65,10 @@ foreach (var flight in fm.OrderedDurationFlights())
 
 //question14
 Console.WriteLine("Les 3 voyageurs les plus âgés du vol :");
-foreach (var traveller in fm.SeniorTravellers(fm.Flights.First()))
-{
-    Console.WriteLine($"Nom: {traveller.FullName.FirstName} {traveller.FullName.Lastname}, Date de naissance: {traveller.BrithDate}");
-}
+//foreach (var traveller in fm.SeniorTravellers(fm.Flights.First()))
+//{
+//    Console.WriteLine($"Nom: {traveller.FullName.FirstName} {traveller.FullName.Lastname}, Date de naissance: {traveller.BrithDate}");
+//}
 //queston15
 
 Console.WriteLine("Vols groupés par destination :");
@@ -95,5 +96,44 @@ passenger.UpperFullName();
 // Affichage du nom après la modification
 Console.WriteLine($"Après modification : {passenger.FullName.FirstName} {passenger.FullName.Lastname}");
 
+
+
+//insertion dans le BD
+AMContext ctx = new AMContext();
+
+//instanciation des objets
+Plane palne1 = new Plane
+{
+    planeType = planeType.Airbus,
+    Capacity = 150,
+    ManufactureDate = new DateTime(2015, 02, 03)
+
+};
+
+Flight f1 = new Flight
+{
+    Departure = "Tunis",
+    Airline = "Tunisair",
+    FlightDate = new DateTime(2022, 02, 01, 21, 10, 10),
+    Destination = "Paris",
+    EffectiveArrival = new DateTime(2022, 02, 01, 23, 10, 10),
+    EstimationDuration = 105,
+    plane = plane1
+};
+
+//Ajout des objets aux bdset
+ctx.Planes.Add(TestData.Airbusplane);
+ctx.Planes.Add(TestData.BoingPlane);
+ctx.Flights.Add(f1);
+
+//persister les données 
+ctx.SaveChanges();
+Console.WriteLine("Ajout effectuée avec succées");
+
+//persister les données
+foreach (Flight f in ctx.Flights) 
+    Console.WriteLine("Date: "+f.FlightDate+"Des:"+f.Destination
+        +""+"plane capacité"+f.plane.Capacity)
+        ;
 
 

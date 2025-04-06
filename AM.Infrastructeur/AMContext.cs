@@ -17,6 +17,8 @@ namespace AM.Infrastructeur
         public DbSet<Passenger> Passengers { get; set; }
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Traveller> Travellers { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+
 
         // OnConfiguring
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -25,6 +27,8 @@ namespace AM.Infrastructeur
                                       Initial Catalog=AirportManagementDB;
                                       Integrated Security=true;
                                       MultipleActiveResultSets=True");
+
+            optionsBuilder.UseLazyLoadingProxies();
             base.OnConfiguring(optionsBuilder);
         }
     
@@ -47,7 +51,22 @@ namespace AM.Infrastructeur
             modelBuilder.Entity<Passenger>().OwnsOne(p => p.FullName);
 
             modelBuilder.ApplyConfiguration(new PassengerConfiguration());
+            //heritage configurer automatiquement par ORM
+            //modelBuilder.Entity<Passenger>()
+            //            .HasDiscriminator<int>("IsTraveller")
+            //            .HasValue<Passenger>(2)
+            //            .HasValue<Traveller>(1)
+            //            .HasValue<Staff>(0);
 
+            //Configurede l'heritage table per type (TPT)
+
+            modelBuilder.Entity<Staff>().ToTable("Staffs");
+            modelBuilder.Entity<Traveller>().ToTable("Travellers");
+
+
+            //configure la cle primaire de la porteuse
+            modelBuilder.Entity<Ticket>()
+                        .HasKey(t => new { t.FlightFk, t.PassengerFk });
 
         }
 
@@ -55,7 +74,8 @@ namespace AM.Infrastructeur
         {
             ConfigurationBuilder.Properties<DateTime>().HaveColumnType("datetime");
             base.ConfigureConventions(ConfigurationBuilder);
-
+           
+        
         }
 
 

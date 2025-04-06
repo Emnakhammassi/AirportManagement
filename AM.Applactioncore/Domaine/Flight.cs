@@ -14,7 +14,7 @@ namespace AM.Applactioncore.Domaine
 
         [ForeignKey("planeFK")] // ou bien [ForeignKey("plane")]
 
-        public Plane plane { get; set; }
+        public virtual Plane plane { get; set; }
         public int planeFK { get; set; }
 
 
@@ -23,7 +23,9 @@ namespace AM.Applactioncore.Domaine
         public DateTime FlightDate { get; set; }
         public DateTime EffectiveArrival { get; set; }
         public int EstimationDuration { get; set; }
-        public ICollection<Passenger> passengers { get; set; }
+        //public ICollection<Passenger> passengers { get; set; }
+
+        public virtual ICollection<Ticket> tickets { get; set; }
 
         public string Airline { get; set; }
 

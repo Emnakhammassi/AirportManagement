@@ -12,7 +12,7 @@ namespace AM.Applactioncore.Domaine
         //public int Id { get; set; }
         [Key]
         [StringLength(7)]
-        public int PassportNumber { get; set; }
+        public string PassportNumber { get; set; }
 
        
 
@@ -25,9 +25,11 @@ namespace AM.Applactioncore.Domaine
 
         [RegularExpression("^[0,9]{8}$")]
         public int TelNumber { get; set; }
-        
-       
-        public ICollection<Flight> flights { get; set; }
+
+
+        //public ICollection<Flight> flights { get; set; }
+        public virtual ICollection<Ticket> tickets { get; set; }
+
 
         public override string? ToString()
         {

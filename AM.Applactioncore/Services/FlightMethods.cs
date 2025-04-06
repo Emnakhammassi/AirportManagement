@@ -147,22 +147,23 @@ namespace AM.Applactioncore.Services
         }
 
         //question14
-        public IEnumerable<Traveller> SeniorTravellers(Flight flight)
-        {
-            var req = from t in flight.passengers.OfType<Traveller>()
-                      orderby t.BrithDate
-                      select t;
-            return req.Take(3);
-        }
+        //public IEnumerable<Traveller> SeniorTravellers(Flight flight)
+        //{
+        //    var req = from t in flight.passengers.OfType<Traveller>()
+        //              orderby t.BrithDate
+        //              select t;
+        //    return req.Take(3);
+        //}
         //question 14 Expressions Lambda
 
-        public IEnumerable<Traveller> SeniorTravellers2(Flight flight)
-        {
-            return flight.passengers
-                         .OfType<Traveller>()
-                         .OrderBy(t => t.BrithDate)
-                         .Take(3);
-        }
+        //public IEnumerable<Traveller> SeniorTravellers2(Flight flight)
+        //{
+        //    //return flight.passengers
+        //    //             .OfType<Traveller>()
+        //    //             .OrderBy(t => t.BrithDate)
+        //    //             .Take(3);
+        //    return null;
+        //}
 
 
         //queston15
@@ -217,7 +218,7 @@ namespace AM.Applactioncore.Services
             return req;
         }
 
-
+     
 
 
         //question 16
