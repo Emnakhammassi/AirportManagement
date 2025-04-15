@@ -14,6 +14,8 @@ namespace AM.Applactioncore.Domaine
         public DateTime EmployementDate { get; set; }
         public string function { get; set; }
 
+        //doit être une valeur monétaire
+
         [DataType(DataType.Currency)]
         public int Salary { get; set; }
     

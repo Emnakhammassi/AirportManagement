@@ -36,6 +36,13 @@ namespace AM.Applactioncore.Domaine
             return "Date" + BrithDate;
         }
 
+
+        //[Required(ErrorMessage = "Le prénom est obligatoire.")]
+        //[StringLength(25, MinimumLength = 3, ErrorMessage = "Le prénom doit contenir entre 3 et 25 caractères.")]
+        //public string FirstName { get; set; }
+
+
+
         public FullName FullName { get; set; }
 
         //question10-a
