@@ -3,7 +3,9 @@ using System.Runtime.Intrinsics.X86;
 using AM.Applactioncore.Domaine;
 using AM.Applactioncore.Services;
 using AM.ApplicationCore.Domain;
+using AM.ApplicationCore.Interfaces;
 using AM.Infrastructeur;
+using AM.Infrastructure;
 //question7
 Plane plane = new Plane();
 
@@ -57,11 +59,11 @@ Console.WriteLine("Moyenne des durées estimées des vols vers Paris : " + fm.Du
 
 
 //question13
-Console.WriteLine("Vols triés par durée estimée (du plus long au plus court) :");
-foreach (var flight in fm.OrderedDurationFlights())
-{
-    Console.WriteLine($"Destination: {flight.Destination}, Durée: {flight.EstimationDuration} heures");
-}
+//Console.WriteLine("Vols triés par durée estimée (du plus long au plus court) :");
+//foreach (var flight in fm.OrderedDurationFlights())
+//{
+//    Console.WriteLine($"Destination: {flight.Destination}, Durée: {flight.EstimationDuration} heures");
+//}
 
 //question14
 Console.WriteLine("Les 3 voyageurs les plus âgés du vol :");
@@ -98,42 +100,60 @@ Console.WriteLine($"Après modification : {passenger.FullName.FirstName} {passen
 
 
 
-//insertion dans le BD
-AMContext ctx = new AMContext();
+////insertion dans le BD
+//AMContext ctx = new AMContext();
 
-//instanciation des objets
-Plane palne1 = new Plane
-{
-    planeType = planeType.Airbus,
-    Capacity = 150,
-    ManufactureDate = new DateTime(2015, 02, 03)
+var context = new AMContext(); // ou ton vrai DbContext configuré
+IUnitOfWork uow = new UnitOfWork(context);
+ServicePlane servicePlane = new ServicePlane(uow);
+ServiceFlight serviceFlight = new ServiceFlight(uow);
 
-};
+////instanciation des objets
+//Plane palne1 = new Plane
+//{
+//    planeType = planeType.Airbus,
+//    Capacity = 150,
+//    ManufactureDate = new DateTime(2015, 02, 03)
 
-Flight f1 = new Flight
-{
-    Departure = "Tunis",
-    Airline = "Tunisair",
-    FlightDate = new DateTime(2022, 02, 01, 21, 10, 10),
-    Destination = "Paris",
-    EffectiveArrival = new DateTime(2022, 02, 01, 23, 10, 10),
-    EstimationDuration = 105,
-    plane = plane1
-};
+//};
 
-//Ajout des objets aux bdset
-ctx.Planes.Add(TestData.Airbusplane);
-ctx.Planes.Add(TestData.BoingPlane);
-ctx.Flights.Add(f1);
+//Flight f1 = new Flight
+//{
+//    Departure = "Tunis",
+//    Airline = "Tunisair",
+//    FlightDate = new DateTime(2022, 02, 01, 21, 10, 10),
+//    Destination = "Paris",
+//    EffectiveArrival = new DateTime(2022, 02, 01, 23, 10, 10),
+//    EstimationDuration = 105,
+//    plane = plane1
+//};
 
-//persister les données 
-ctx.SaveChanges();
-Console.WriteLine("Ajout effectuée avec succées");
+////instanciation des objets
+servicePlane.Add(TestData.Airbusplane);
+servicePlane.Add(TestData.BoingPlane);
+servicePlane.Add(plane1);
+servicePlane.Commit();
 
-//persister les données
-foreach (Flight f in ctx.Flights) 
-    Console.WriteLine("Date: "+f.FlightDate+"Des:"+f.Destination
-        +""+"plane capacité"+f.plane.Capacity)
-        ;
+
+////Ajout des objets aux bdset
+//ctx.Planes.Add(TestData.Airbusplane);
+//ctx.Planes.Add(TestData.BoingPlane);
+//ctx.Flights.Add(f1);
+
+
+
+
+////persister les données 
+//ctx.SaveChanges();
+//Console.WriteLine("Ajout effectuée avec succées");
+
+////persister les données
+//foreach (Flight f in ctx.Flights) 
+//    Console.WriteLine("Date: "+f.FlightDate+"Des:"+f.Destination
+//        +""+"plane capacité"+f.plane.Capacity)
+//        ;
+
+
+
 
 

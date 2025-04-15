@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AM.Infrastructeur.Migrations
 {
     /// <inheritdoc />
-    public partial class tickk : Migration
+    public partial class UpdateFlightAndPlane : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

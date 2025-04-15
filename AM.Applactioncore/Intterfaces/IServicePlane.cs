@@ -11,5 +11,11 @@ namespace AM.Applactioncore.Intterfaces
 {
     public interface IServicePlane : IService<Plane>
     {
+
+        IEnumerable<Passenger> GetPassenger(Plane p);
+        IEnumerable<Flight> GetFlights(int n);
+        bool IsAvailablePlane(Flight flight, int n);
+
+        void DeletePlanes();
     }
 }
