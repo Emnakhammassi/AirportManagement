@@ -16,7 +16,7 @@
            
             <div class="form-group">
                 <label asp-for="planeFK" class="control-label"></label>
-                <input asp-for="planeFK" class="form-control" />
+                <select asp-for="planeFK" class="form-control" asp-items="ViewBag.PlaneFk"></select>
                 <span asp-validation-for="planeFK" class="text-danger"></span>
             </div>
             <div class="form-group">
