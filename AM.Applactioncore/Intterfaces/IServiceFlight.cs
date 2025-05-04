@@ -10,5 +10,7 @@ namespace AM.Applactioncore.Intterfaces
 {
     public interface IServiceFlight : IService<Flight>
     {
+        public IEnumerable<Flight> SortFlights();
+        
     }
 }

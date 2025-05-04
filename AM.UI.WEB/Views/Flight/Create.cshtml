@@ -1,4 +1,71 @@
-﻿@model AM.Applactioncore.Domaine.Flight
+﻿@* @model AM.Applactioncore.Domaine.Flight *@
+
+@* @{ *@
+@*     ViewData["Title"] = "Create"; *@
+@*     Layout = "~/Views/Shared/_Layout.cshtml"; *@
+@* } *@
+
+@* <h1>Create</h1> *@
+
+@* <h4>Flight</h4> *@
+@* <hr /> *@
+@* <div class="row"> *@
+@*     <div class="col-md-4"> *@
+@*         <form asp-action="Create"> *@
+@*             <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+           
+@*             <div class="form-group"> *@
+@*                 <label asp-for="planeFK" class="control-label"></label> *@
+@*                 <select asp-for="planeFK" class="form-control" asp-items="ViewBag.PlaneFk"></select> *@
+@*                 <span asp-validation-for="planeFK" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="Destination" class="control-label"></label> *@
+@*                 <input asp-for="Destination" class="form-control" /> *@
+@*                 <span asp-validation-for="Destination" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="Departure" class="control-label"></label> *@
+@*                 <input asp-for="Departure" class="form-control" /> *@
+@*                 <span asp-validation-for="Departure" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="FlightDate" class="control-label"></label> *@
+@*                 <input asp-for="FlightDate" class="form-control" /> *@
+@*                 <span asp-validation-for="FlightDate" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="EffectiveArrival" class="control-label"></label> *@
+@*                 <input asp-for="EffectiveArrival" class="form-control" /> *@
+@*                 <span asp-validation-for="EffectiveArrival" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="EstimationDuration" class="control-label"></label> *@
+@*                 <input asp-for="EstimationDuration" class="form-control" /> *@
+@*                 <span asp-validation-for="EstimationDuration" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="Airline" class="control-label"></label> *@
+@*                 <input asp-for="Airline" class="form-control" /> *@
+@*                 <span asp-validation-for="Airline" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <input type="submit" value="Create" class="btn btn-primary" /> *@
+@*             </div> *@
+@*         </form> *@
+@*     </div> *@
+@* </div> *@
+
+@* <div> *@
+@*     <a asp-action="Index">Back to List</a> *@
+@* </div> *@
+
+@* @section Scripts { *@
+@*     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} *@
+@* } *@
+
+
+@model AM.Applactioncore.Domaine.Flight
 
 @{
     ViewData["Title"] = "Create";
@@ -11,9 +78,9 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
+
             <div class="form-group">
                 <label asp-for="planeFK" class="control-label"></label>
                 <select asp-for="planeFK" class="form-control" asp-items="ViewBag.PlaneFk"></select>
@@ -49,6 +116,14 @@
                 <input asp-for="Airline" class="form-control" />
                 <span asp-validation-for="Airline" class="text-danger"></span>
             </div>
+
+            <!-- Ajout du champ pour uploader l'image du pilote -->
+            <div class="form-group">
+                <label asp-for="Pilot" class="control-label">Image du Pilote</label>
+                <input name="PilotImage" type="file" class="form-control" />
+                <span asp-validation-for="Pilot" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -61,5 +136,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

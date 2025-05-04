@@ -46,38 +46,118 @@ namespace AM.UI.WEB.Controllers
         // POST: FlightController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Flight collection)
+        public ActionResult Create(Flight collection, IFormFile PilotImage)
         {
             try
-            {   //ajout dans la base de données
+            {
+                if (PilotImage != null && PilotImage.Length > 0)
+                {
+                    // Créer le dossier uploads s'il n'existe pas
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Générer un nom de fichier unique
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + PilotImage.FileName;
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        PilotImage.CopyTo(stream);
+                    }
+
+                    collection.Pilot = uniqueFileName;
+                }
+
                 sf.Add(collection);
                 sf.Commit();
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ViewBag.planeFK = new SelectList(sp.GetMany(), "PlaneId", "Information");
+                return View(collection);
             }
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create(Flight collection)
+        //{
+        //    try
+        //    {   //ajout dans la base de données
+        //        sf.Add(collection);
+        //        sf.Commit();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+
+
+
 
         // GET: FlightController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var flight = sf.GetById(id);
+            if (flight == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.planeFK = new SelectList(sp.GetMany(), "PlaneId", "Information", flight.planeFK);
+            return View(flight);
         }
 
         // POST: FlightController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Flight flight, IFormFile PilotImage)
         {
+            if (id != flight.FlightId)
+            {
+                return NotFound();
+            }
+
             try
             {
+                if (PilotImage != null && PilotImage.Length > 0)
+                {
+                    // Supprimer l'ancienne image si elle existe
+                    if (!string.IsNullOrEmpty(flight.Pilot))
+                    {
+                        var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", flight.Pilot);
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    // Enregistrer la nouvelle image
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + PilotImage.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", uniqueFileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        PilotImage.CopyTo(stream);
+                    }
+
+                    flight.Pilot = uniqueFileName;
+                }
+
+                sf.Update(flight);
+                sf.Commit();
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ViewBag.planeFK = new SelectList(sp.GetMany(), "PlaneId", "Information", flight.planeFK);
+                return View(flight);
             }
         }
 
@@ -104,6 +184,13 @@ namespace AM.UI.WEB.Controllers
             {
                 return View();
             }
+        }
+
+
+        public ActionResult Sort()
+        {
+            var sortedFlights = sf.SortFlights(); // Utilise la méthode de tri du service
+            return View("Index", sortedFlights); // Réutilise la vue Index avec les vols triés
         }
     }
 }
