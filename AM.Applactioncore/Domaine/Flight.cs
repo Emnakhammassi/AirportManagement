@@ -28,8 +28,6 @@ namespace AM.Applactioncore.Domaine
         public virtual ICollection<Ticket> tickets { get; set; }
 
         public string Airline { get; set; }
-
-
-
+        public object Staffs { get; internal set; }
     }
 }
