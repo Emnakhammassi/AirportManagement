@@ -1,0 +1,15 @@
+﻿@model AM.Applactioncore.Domaine.Flight;
+ @* utilisation d’une vue partielle TP-Partie8 *@
+<div>
+    <dl class="row">
+        <dt>Nombre de passagers</dt>
+        <dd>@Model.tickets.Count()</dd>
+
+        <dt>Type Avion</dt>
+        <dd>@Model.plane.planeType</dd>
+
+        <dt>Capacité</dt>
+        <dd>@Model.plane.Capacity</dd>
+
+    </dl>
+</div>

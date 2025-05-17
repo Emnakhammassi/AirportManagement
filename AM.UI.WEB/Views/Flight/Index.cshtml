@@ -8,9 +8,20 @@
 <h1>Gestion des Vols</h1>
 
 <div class="d-flex justify-content-between mb-4">
-    <a asp-action="Create" class="btn btn-success">
-        <i class="fas fa-plus"></i> Créer un nouveau vol
+    <a asp-action="Create" >
+        <i class="fas fa-plus-circle me-2"></i> Créer un nouveau vol
     </a>
+
+     @* barre de recherche *@
+    <form asp-action="index">
+        <fieldset>
+            <legend> Recherche</legend>
+            Saisir une date de départ :
+            <input type="date" name="dateDepart" />
+            <input type="submit" value="Serach" />
+        </fieldset>
+    </form>
+
 
     <form asp-action="Sort" method="post">
         <button type="submit" class="btn btn-primary">
@@ -75,6 +86,14 @@
                         </a>
                     </div>
                 </td>
+
+
+                @* utilisation d’une vue partielle TP-Partie8 *@
+                <td colspan="10">
+                    <partial name="_FlightDetails" model="item" />
+                </td>
+
+
             </tr>
         }
     </tbody>
